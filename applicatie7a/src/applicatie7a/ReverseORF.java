@@ -9,9 +9,6 @@ public class ReverseORF {
     HashSet<String> ORF_1 = new HashSet<>(); //Alle ORF's
     HashSet<String> ORF_2 = new HashSet<>(); // ""
     HashSet<String> ORF_3 = new HashSet<>(); // ""
-    HashMap<String, HashSet<String>> alleORF_1 = new HashMap<>(); // Alle ORF's gelinkt aan hun readingframe
-    HashMap<String, HashSet<String>> alleORF_2 = new HashMap<>(); // ""
-    HashMap<String, HashSet<String>> alleORF_3 = new HashMap<>(); // ""
     ArrayList<ORF> alleReverseORFs = new ArrayList<>();
 
     public void leesBestand(String sequentie, int size, String header) {
@@ -139,16 +136,5 @@ public class ReverseORF {
         return ORF_3.size();
     }
 
-    public HashMap<String, HashSet<String>> getORF_1() {
-        return alleORF_1;
-    }
-
-    public HashMap<String, HashSet<String>> getORF_2() {
-        return alleORF_2;
-    }
-
-    public HashMap<String, HashSet<String>> getORF_3() {
-        return alleORF_3;
-    }
 }
 
