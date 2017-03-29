@@ -8,11 +8,14 @@ import java.io.IOException;
  */
 public class LeesBestand {
     String sequentie = null;
-    public void readFile(String filepathway){
+    String header;
+
+    public void readFile(String filepathway) {
         try {
             BufferedReader inFile = new BufferedReader(
                     new FileReader(filepathway));
             String line;
+            header = inFile.readLine();
             while ((line = inFile.readLine()) != null) {
                 sequentie = sequentie + line;
             }
@@ -20,5 +23,12 @@ public class LeesBestand {
             JOptionPane.showMessageDialog(null, "cant find file");
         }
     }
-    public String getSequentie() {return sequentie;}
+
+    public String getSequentie() {
+        return sequentie;
+    }
+
+    public String getheader() {
+        return header;
+    }
 }

@@ -17,6 +17,8 @@ public class OpenBestand extends Component {
             selectedFile = fileChooser.getSelectedFile();
         }
     }
-    public String getfilepathway() {return selectedFile.getAbsolutePath();}
-}
 
+    public String getfilepathway() {
+        return selectedFile.getAbsolutePath();
+    }
+}
