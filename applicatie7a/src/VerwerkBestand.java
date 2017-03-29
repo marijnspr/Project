@@ -1,6 +1,6 @@
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
+import project7a.ORF;
 
 /**
  * Created by Michelle on 27-3-2017.
@@ -13,6 +13,7 @@ public class VerwerkBestand {
     HashMap<String, HashSet<String>> alleORF1 = new HashMap<>(); // Alle ORF's gelinkt aan hun readingframe
     HashMap<String, HashSet<String>> alleORF2 = new HashMap<>(); // ""
     HashMap<String, HashSet<String>> alleORF3 = new HashMap<>(); // ""
+    ArrayList<ORF> alleForwardORFs = new ArrayList<>();
 
     public void orfVoorspeller(String seqDNA, int size, String header) {
 
@@ -48,9 +49,8 @@ public class VerwerkBestand {
                     }
                 }
                 if(ORF.length()>size) {
-                    new ORF(header, startpos, stoppos, readingframe, ORF);
+                    alleForwardORFs.add(new ORF(header, startpos, stoppos, readingframe, ORF));
                     ORF1.add(ORF);
-                    alleORF1.put(readingframe, ORF1);
                 }
             }
         }
@@ -83,9 +83,9 @@ public class VerwerkBestand {
                     }
                 }
                 if(ORF.length()>size){
-                    new ORF(header, startpos, stoppos, readingframe, ORF);
+                    alleForwardORFs.add(new ORF(header, startpos, stoppos, readingframe, ORF));
                     ORF2.add(ORF);
-                    alleORF2.put(readingframe, ORF2);}
+                    }
             }
         }
         /**
@@ -117,9 +117,8 @@ public class VerwerkBestand {
                     }
                 }
                 if(ORF.length()>size) {
-                    new ORF(header, startpos, stoppos, readingframe, ORF);
+                    alleForwardORFs.add(new ORF(header, startpos, stoppos, readingframe, ORF));
                     ORF3.add(ORF);
-                    alleORF3.put(readingframe, ORF3);
                 }
             }
         }
@@ -137,17 +136,6 @@ public class VerwerkBestand {
         return ORF3.size();
     }
 
-    public HashMap<String, HashSet<String>> getORF1() {
-        return alleORF1;
-    }
-
-    public HashMap<String, HashSet<String>> getORF2() {
-        return alleORF2;
-    }
-
-    public HashMap<String, HashSet<String>> getORF3() {
-        return alleORF3;
-    }
 }
 
 
