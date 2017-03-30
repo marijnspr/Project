@@ -133,7 +133,9 @@ public class VerwerkBestand {
     public int getORF3size() {
         return ORF3.size();
     }
-
+    public ArrayList<ORF> getORFforward(){
+    return alleForwardORFs;
+    }
 }
 
 
