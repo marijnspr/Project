@@ -139,7 +139,7 @@ public class MainGUI extends JFrame implements ActionListener{
         }
         if(event.getSource() == exportDatabaseButton){
             try {
-                dbcon.connectie();
+                dbcon.connectie(lezen.getheader(),bestand.getORFforward(), reverse.getORFreverse(),lezen.getSequentie());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
