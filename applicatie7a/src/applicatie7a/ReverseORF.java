@@ -135,6 +135,8 @@ public class ReverseORF {
     public int getORF_3size() {
         return ORF_3.size();
     }
-
+    public ArrayList<ORF> getORFreverse(){
+    return alleReverseORFs;
+    }
 }
 
