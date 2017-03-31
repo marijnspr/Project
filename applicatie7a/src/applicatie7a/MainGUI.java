@@ -1,30 +1,38 @@
 package applicatie7a;
 
-import applicatie7a.VerwerkBestand;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Michelle on 27-3-2017.
  */
-public class MainGUI extends JFrame implements ActionListener{
+public class MainGUI extends JFrame implements ActionListener {
 
+    /**
+     *
+     */
     public JPanel gegevensPanel;
-    public JButton bladerButton, openButton, voorspelButton,
-                    exportDatabaseButton;
-    public JTextField filePathway, orfSize;
+    public JButton bladerButton, openButton,voorspelButton,exportDatabaseButton;
+    public JTextField filePathway,orfSize;
     public JTextArea sequentieField;
-    public JLabel fileLabel, sequentieLabel, gegevensLabel, rf1Label, rf2Label, rf3Label, rf_1Label, rf_2Label, rf_3Label;
+    public JLabel fileLabel,sequentieLabel, gegevensLabel, orfSizeLabel, rf1Label,rf2Label,rf3Label,rf_1Label, rf_2Label,rf_3Label;
     VerwerkBestand bestand = new VerwerkBestand();
     ReverseORF reverse = new ReverseORF();
     OpenBestand openen = new OpenBestand();
     LeesBestand lezen = new LeesBestand();
     DatabaseConnectie dbcon = new DatabaseConnectie();
 
-    public static void main(String[] args){
+    /**
+     *
+     * @param args
+     * @throws applicatie7a.geenORFgevonden
+     */
+    public static void main(String[] args)throws geenORFgevonden{
         MainGUI frame = new MainGUI();
         frame.setSize(600,600);
         frame.GUI();
@@ -33,7 +41,11 @@ public class MainGUI extends JFrame implements ActionListener{
         frame.show();
     }
 
-    public void GUI(){
+    /**
+     *
+     * @throws applicatie7a.geenORFgevonden
+     */
+    public void GUI()throws geenORFgevonden{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Container window = getContentPane();
         window.setLayout(new FlowLayout());
@@ -57,10 +69,12 @@ public class MainGUI extends JFrame implements ActionListener{
 
         sequentieField = new JTextArea();
         sequentieField.setPreferredSize(new Dimension(450,150));
-        sequentieField.setLineWrap(true
-        );
+        sequentieField.setLineWrap(true);
         window.add(sequentieField);
 
+        orfSizeLabel = new JLabel("minimale aantal nucleotiden per ORF ");
+        window.add(orfSizeLabel);
+        
         orfSize = new JTextField(10);
         orfSize.setText("0");
         window.add(orfSize);
@@ -108,14 +122,27 @@ public class MainGUI extends JFrame implements ActionListener{
         exportDatabaseButton.addActionListener(this);
     }
 
-    public void actionPerformed(ActionEvent event){
+    /**
+     *
+     * @param event
+     * @throws applicatie7a.geenORFgevonden
+     */
+    public void actionPerformed(ActionEvent event)throws geenORFgevonden{
         if(event.getSource() == bladerButton) {
             openen.openFile();
             filePathway.setText(openen.getfilepathway());
         }
 
         if (event.getSource() == openButton) {
-            lezen.readFile(filePathway.getText());
+            try {
+                lezen.readFile(filePathway.getText());
+            } catch (geenFastaException ex) {
+                Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (geenDNAsequentie ex) {
+                Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (sequentieTeLang ex) {
+                Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
             sequentieField.append(lezen.getSequentie());
         }
 
@@ -136,13 +163,31 @@ public class MainGUI extends JFrame implements ActionListener{
             gegevensPanel.add(rf_2Label);
             gegevensPanel.add(rf_3Label);
             gegevensPanel.updateUI();
+            int totaalORF = reverse.alleReverseORFs.size() + bestand.alleForwardORFs.size();
+             
+            if(totaalORF == 0){
+            JFrame j1 = null;    
+            JOptionPane.showMessageDialog(j1, "Er is geen ORF gevonden", "ORF error", JOptionPane.ERROR_MESSAGE);
+            }          
         }
         if(event.getSource() == exportDatabaseButton){
             try {
                 dbcon.connectie(lezen.getheader(),bestand.getORFforward(), reverse.getORFreverse(),lezen.getSequentie());
             } catch (SQLException e) {
                 e.printStackTrace();
+            } catch (geenVerbinding ex) {
+                Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (geenDriver ex) {
+                Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+}
+class geenORFgevonden extends RuntimeException{
+    JFrame j1;
+    public geenORFgevonden(){
+        super();
+        JOptionPane.showMessageDialog(j1, "Er is geen ORF gevonden", "ORF error", JOptionPane.ERROR_MESSAGE);
+    }
+    
 }

@@ -1,34 +1,33 @@
 package applicatie7a;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 
 /**
  * Created by Michelle on 29-3-2017.
  */
 public class DatabaseConnectie {
-    public void connectie(String header,ArrayList<ORF> forward, ArrayList<ORF> reverse, String refseq) throws SQLException {
+
+    /**
+     *
+     * @param header
+     * @param forward
+     * @param reverse
+     * @param refseq
+     * @throws SQLException
+     */
+    public void connectie(String header,ArrayList<ORF> forward, ArrayList<ORF> reverse, String refseq) throws SQLException, geenVerbinding, geenDriver {
         System.out.println("-------- Oracle JDBC Connection Testing ------");
 
         try {
-
             Class.forName("oracle.jdbc.driver.OracleDriver");
 
         } catch (ClassNotFoundException e) {
-
-            System.out.println("Where is your Oracle JDBC Driver?");
-            e.printStackTrace();
-            return;
-
+            throw new geenDriver();
         }
-
-        System.out.println("Oracle JDBC Driver Registered!");
-
         Connection connection = null;
 
         try {
@@ -37,62 +36,79 @@ public class DatabaseConnectie {
                     "jdbc:oracle:thin:@cytosine.nl:1521:xe", "owe7_pg5", "blaat1234");
 
         } catch (SQLException e) {
-
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
-            return;
-
+            throw new geenVerbinding();
         }
 
         if (connection != null) {
-            System.out.println("You made it, take control your database now!");
             Statement stmt = connection.createStatement();
             int count = 0;
             
             String sql;
             sql = "SELECT MAX (TO_CHAR(ID_SEQUENTIE)) FROM INGEVOERDE_SEQUENTIE";
-            
-//            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-//            Calendar calendar = Calendar.getInstance();
-////            Date date = (Date) calendar.getTime();
-//            java.util.Date utiDate = new java.util.Date();
-//            java.sql.Date sqlDate = new java.sql.Date(utiDate.getTime());
-             
 
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                //count = rs.getInt("ID_Sequentie");
                 count = rs.getInt(1);
             }
-            System.out.println(count);
             count += 1;
+            
 //invullen database ingevoerde sequentie
             String query = "INSERT INTO INGEVOERDE_SEQUENTIE (ID_SEQUENTIE, NAAM, DATUM, SEQUENTIE) VALUES (?,?,?,?)"; 
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1,Integer.toString(count));
             preparedStmt.setString(2, header);
             preparedStmt.setDate(3, java.sql.Date.valueOf(java.time.LocalDate.now()));
-            preparedStmt.setString(4, refseq.substring(0, 4000));
-
-//            stmt.executeUpdate(query);
+            preparedStmt.setString(4, refseq);
             preparedStmt.execute();
- // forward sequentie in ORF          
+            
+ // forward sequentie in ORF 
               for(int i = 0; i<forward.size();i++){
-                String query1 = "INSERT INTO ORF (START_POSITIE, STOP_POSITIE, READING_FRAME, SEQ_ID, SEQUENTIE_ORF)" + 
-                    "VALUES ("+ forward.get(i).getStartPos() +","+ forward.get(i).getStopPos()  +","+  forward.get(i).getORFseq() +","+count +","+forward.get(i).getReadingFrame()+");";
-                stmt.executeUpdate(query1);
+                String query1 = "INSERT INTO ORF (START_POSITIE, STOP_POSITIE, READING_FRAME, SEQ_ID, SEQUENTIE_ORF) VALUES (?,?,?,?,?)"; 
+                System.out.println("start positie: "+ forward.get(i).getStartPos());
+                PreparedStatement ps = connection.prepareStatement(query1);
+                ps.setInt(1, forward.get(i).getStartPos());
+                ps.setInt(2, forward.get(i).getStopPos());
+                ps.setString(3, forward.get(i).getReadingFrame());
+                ps.setInt(4, count);
+                ps.setString(5, forward.get(i).getORFseq());
+                ps.execute();
               }
+              
  // reverse sequentie in oRF
             for(int i= 0;i<reverse.size();i++){
-                String query2 = "INSERT INTO ORF (START_POSITIE, STOP_POSITIE, READING_FRAME, SEQ_ID, SEQUENTIE_ORF)" +
-                        "VALUES ("+ reverse.get(i).getStartPos()  +","+ reverse.get(i).getStopPos()  +","+ reverse.get(i).getReadingFrame() +","+ count +","+ reverse.get(i).getORFseq()+");";
-            stmt.executeUpdate(query2);
+                String query2 = "INSERT INTO ORF (START_POSITIE, STOP_POSITIE, READING_FRAME, SEQ_ID, SEQUENTIE_ORF) VALUES(?,?,?,?,?)"; 
+                PreparedStatement ps = connection.prepareStatement(query2);
+                ps.setInt(1, reverse.get(i).getStartPos());
+                ps.setInt(2, reverse.get(i).getStopPos());
+                ps.setString(3, reverse.get(i).getReadingFrame());
+                ps.setInt(4, count);
+                ps.setString(5, reverse.get(i).getORFseq());
+                ps.execute();
             }
+            
             rs.close();
             stmt.close();
             connection.close();
+                    
         } else {
             System.out.println("Failed to make connection!");
         }
     }
+}
+class geenVerbinding extends Exception{
+    JFrame j1;
+    public geenVerbinding(){
+        super();
+        JOptionPane.showMessageDialog(j1, "Er is geen verbinding met de database", "Connection error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+ 
+class geenDriver extends Exception{
+    JFrame j1;
+    public geenDriver(){
+    super();
+    JOptionPane.showMessageDialog(j1,"Er is geen driver voor een Oracle database geinstalleerd","Driver Error",JOptionPane.WARNING_MESSAGE);
+            
+    }
+
 }

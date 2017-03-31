@@ -5,9 +5,18 @@ package applicatie7a;
  */
 public class ORF {
 
-    private String headers, startpositie, stoppositie, readingframe, sequentieORF;
+    private String headers, readingframe, sequentieORF;
+    private int startpositie, stoppositie;
 
-    public ORF(String header, String start, String stop, String rf, String seqORF) {
+    /**
+     *
+     * @param header
+     * @param start
+     * @param stop
+     * @param rf
+     * @param seqORF
+     */
+    public ORF(String header, int start, int stop, String rf, String seqORF) {
         headers = header;
         startpositie = start;
         stoppositie = stop;
@@ -15,18 +24,34 @@ public class ORF {
         sequentieORF = seqORF;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getStartPos() {
-        return Integer.getInteger(startpositie);
+        return startpositie;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getStopPos() {
-        return Integer.getInteger(stoppositie);
+        return stoppositie;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getReadingFrame() {
         return readingframe;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getORFseq() {
         return sequentieORF;
     }

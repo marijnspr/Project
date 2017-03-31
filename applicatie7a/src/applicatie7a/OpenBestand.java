@@ -12,6 +12,9 @@ public class OpenBestand extends Component {
     File selectedFile;
     int reply;
 
+    /**
+     *
+     */
     public void openFile() {
         fileChooser = new JFileChooser();
         reply = fileChooser.showOpenDialog(this);
@@ -20,6 +23,10 @@ public class OpenBestand extends Component {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getfilepathway() {
         return selectedFile.getAbsolutePath();
     }

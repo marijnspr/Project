@@ -13,6 +13,12 @@ public class VerwerkBestand {
     HashSet<String> ORF3 = new HashSet<>(); // ""
     ArrayList<ORF> alleForwardORFs = new ArrayList<>();
 
+    /**
+     *
+     * @param seqDNA
+     * @param size
+     * @param header
+     */
     public void orfVoorspeller(String seqDNA, int size, String header) {
 
         HashSet<String> stopcodon = new HashSet<>();
@@ -22,14 +28,14 @@ public class VerwerkBestand {
         String startcodon = "ATG";
 
         for (int i = 0; i < seqDNA.length() - 2; i += 3) {
-            String startpos;
-            String stoppos = null;
+            int startpos;
+            int stoppos = 0;
             String readingframe = "+1";
             String codon = null;
             codon = seqDNA.substring(i, i + 3);
 
             if (codon.equals(startcodon)) {
-                startpos = Integer.toString(i+1);
+                startpos = i+1;
                 String ORF = null;
                 for (int y = i += 3; y < seqDNA.length() - 2; y += 3) {
                     String codon2 = null;
@@ -37,7 +43,7 @@ public class VerwerkBestand {
                     if (stopcodon.contains(codon2)) {
                         ORF = ORF + codon2;
                         y = seqDNA.length();
-                        stoppos = Integer.toString(y-2);
+                        stoppos = y-2;
                     } else {
                         if (ORF == null) {
                             ORF = codon + codon2;
@@ -56,20 +62,20 @@ public class VerwerkBestand {
          * Readingframs +2
          */
         for (int i = 1; i < seqDNA.length() - 2; i += 3) {
-            String startpos;
-            String stoppos = null;
+            int startpos;
+            int stoppos = 0;
             String readingframe = "+2";
             String codon = null;
             codon = seqDNA.substring(i, i + 3);
 
             if (codon.equals(startcodon)) {
-                startpos = Integer.toString(i+1);
+                startpos = i+1;
                 String ORF = null;
                 for (int y = i += 3; y < seqDNA.length() - 2; y += 3) {
                     String codon2 = null;
                     codon2 = seqDNA.substring(y, y + 3);
                     if (stopcodon.contains(codon2)) {
-                        stoppos = Integer.toString(y-2);
+                        stoppos = y-2;
                         ORF = ORF + codon2;
                         y = seqDNA.length();
                     } else {
@@ -90,20 +96,20 @@ public class VerwerkBestand {
          * Readingframe +3
          */
         for (int i = 2; i < seqDNA.length() - 2; i += 3) {
-            String startpos;
-            String stoppos = null;
+            int startpos;
+            int stoppos = 0;
             String readingframe = "+3";
             String codon = null;
             codon = seqDNA.substring(i, i + 3);
 
             if (codon.equals(startcodon)) {
-                startpos = Integer.toString(i+1);
+                startpos = i+1;
                 String ORF = null;
                 for (int y = i += 3; y < seqDNA.length() - 2; y += 3) {
                     String codon2 = null;
                     codon2 = seqDNA.substring(y, y + 3);
                     if (stopcodon.contains(codon2)) {
-                        stoppos = Integer.toString(y-2);
+                        stoppos = y-2;
                         ORF = ORF + codon2;
                         y = seqDNA.length();
                     } else {
@@ -122,23 +128,35 @@ public class VerwerkBestand {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getORF1size() {
         return ORF1.size();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getORF2size() {
         return ORF2.size();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getORF3size() {
         return ORF3.size();
     }
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<ORF> getORFforward(){
     return alleForwardORFs;
     }
 }
-
-
-
-
-
