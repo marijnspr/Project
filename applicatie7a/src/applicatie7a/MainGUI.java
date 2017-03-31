@@ -71,6 +71,7 @@ public class MainGUI extends JFrame implements ActionListener {
         sequentieField.setPreferredSize(new Dimension(450,150));
         sequentieField.setLineWrap(true);
         window.add(sequentieField);
+        sequentieField.disable();
 
         orfSizeLabel = new JLabel("minimale aantal nucleotiden per ORF ");
         window.add(orfSizeLabel);

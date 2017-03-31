@@ -26,9 +26,9 @@ public class LeesBestand {
             if(!header.startsWith(">")){
             throw new geenFastaException();
             }
-            String DNA = ".*[ATGCN].*";
+            String DNA = ".*[ATCGN].*";
             while ((line = inFile.readLine()) != null) {
-                if(!line.matches(DNA)){
+                if(!line.toUpperCase().matches(DNA)){
                     throw new geenDNAsequentie();
                 }
                 if(sequentie == null){

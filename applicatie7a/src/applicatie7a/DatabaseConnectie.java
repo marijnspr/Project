@@ -18,11 +18,11 @@ public class DatabaseConnectie {
      * @param reverse
      * @param refseq
      * @throws SQLException
+     * @throws applicatie7a.geenVerbinding
+     * @throws applicatie7a.geenDriver
      */
     public void connectie(String header,ArrayList<ORF> forward, ArrayList<ORF> reverse, String refseq) throws SQLException, geenVerbinding, geenDriver {
-        System.out.println("-------- Oracle JDBC Connection Testing ------");
-
-        try {
+       try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
 
         } catch (ClassNotFoundException e) {
@@ -64,7 +64,6 @@ public class DatabaseConnectie {
  // forward sequentie in ORF 
               for(int i = 0; i<forward.size();i++){
                 String query1 = "INSERT INTO ORF (START_POSITIE, STOP_POSITIE, READING_FRAME, SEQ_ID, SEQUENTIE_ORF) VALUES (?,?,?,?,?)"; 
-                System.out.println("start positie: "+ forward.get(i).getStartPos());
                 PreparedStatement ps = connection.prepareStatement(query1);
                 ps.setInt(1, forward.get(i).getStartPos());
                 ps.setInt(2, forward.get(i).getStopPos());
