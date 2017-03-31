@@ -1,9 +1,11 @@
-# Project
+# Project - Projectgroep 5
 
 <h3>Beschrijving</h3>
 
 De ORF finder die geschreven is in java zoekt in de opgegeven sequentie naar open reading frames (ORFs).
 De ORF finder retuneerd het aantal gevonden ORFs per reading frame en heeft de mogelijkheid dit te exporteren naar een database. 
+
+De ORF finder is gemaakt door projectgroep 5 bestaande uit: Michelle Stegeman, Anne Luesink, Marijn Sprukkelhorst en Rick Medemblik.
 
 <h3>Benodigdheden</h3>
 
