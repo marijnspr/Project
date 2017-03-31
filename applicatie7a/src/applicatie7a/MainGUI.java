@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 
 /**
  * Created by Michelle on 27-3-2017.
+ * functie: GUI bouwen en acties aanroepen.
+ * known bugs: Niet bekend.
  */
 public class MainGUI extends JFrame implements ActionListener {
 
@@ -28,9 +30,10 @@ public class MainGUI extends JFrame implements ActionListener {
     DatabaseConnectie dbcon = new DatabaseConnectie();
 
     /**
-     *
+     * functie:
+     * known bugs:
      * @param args
-     * @throws applicatie7a.geenORFgevonden
+     * @throws applicatie7a.geenORFgevonden custom exception die wordt opgeworpen wanneer er geen ORF's zijn gevonden in de input.
      */
     public static void main(String[] args)throws geenORFgevonden{
         MainGUI frame = new MainGUI();
@@ -42,7 +45,8 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
     /**
-     *
+     * functie: Het opbouwen van de GUI.
+     * known bugs: niet aanwezig.
      * @throws applicatie7a.geenORFgevonden
      */
     public void GUI()throws geenORFgevonden{
@@ -77,7 +81,7 @@ public class MainGUI extends JFrame implements ActionListener {
         window.add(orfSizeLabel);
         
         orfSize = new JTextField(10);
-        orfSize.setText("0");
+        orfSize.setText("30");
         window.add(orfSize);
 
         voorspelButton = new JButton("voorspel ORF's");
@@ -124,7 +128,8 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
     /**
-     *
+     * functie: Het defineren van de acties.
+     * known bugs: Niet aanwezig.
      * @param event
      * @throws applicatie7a.geenORFgevonden
      */

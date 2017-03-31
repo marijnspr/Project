@@ -12,10 +12,11 @@ public class LeesBestand {
     String sequentie = null;
     String header;
 
-    /**
-     *
-     * @param filepathway
-     * @throws applicatie7a.geenFastaException
+    /** 
+     * functie: lezen van het bestand en plaatsen in textarea.
+     * known bugs: niet aanwezig.
+     * @param filepathway de pathway naar de locatie van de file.
+     * @throws applicatie7a.geenFastaException exception die wordt opgeworpen wanneer het ingevoerde bestnd geen fasta is.
      */
     public void readFile(String filepathway)throws geenFastaException, geenDNAsequentie, sequentieTeLang {
         try {
@@ -46,16 +47,14 @@ public class LeesBestand {
     }
 
     /**
-     *
-     * @return
+     * @return een String type met de nucleotidesequentie uit het bestand.
      */
     public String getSequentie() {
         return sequentie;
     }
 
     /**
-     *
-     * @return
+     * @return een String type met de header van het fasta bestand.
      */
     public String getheader() {
         return header;

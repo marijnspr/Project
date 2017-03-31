@@ -13,7 +13,8 @@ public class OpenBestand extends Component {
     int reply;
 
     /**
-     *
+     * functie: Het openen van de gekozen pathway in de gui.
+     * known bugs: niet aanwezig.
      */
     public void openFile() {
         fileChooser = new JFileChooser();
@@ -23,10 +24,7 @@ public class OpenBestand extends Component {
         }
     }
 
-    /**
-     *
-     * @return
-     */
+
     public String getfilepathway() {
         return selectedFile.getAbsolutePath();
     }

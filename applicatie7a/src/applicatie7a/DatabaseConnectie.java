@@ -13,13 +13,12 @@ public class DatabaseConnectie {
 
     /**
      *
-     * @param header
-     * @param forward
-     * @param reverse
-     * @param refseq
-     * @throws SQLException
-     * @throws applicatie7a.geenVerbinding
-     * @throws applicatie7a.geenDriver
+     * @param header De header van het bestand in een String
+     * @param forward De objecten van de forward sequentie in een Arraylist
+     * @param reverse De objecten van de reverse sequentie in een Arraylist
+     * @param refseq een string met de ingevoerde sequentie
+     * @throws SQLException exception die wordt opgeworpen wanneer er geen connectie gemaakt kan worden met de database
+\     * @throws applicatie7a.geenDriver exception die wordt opgeworpen wanneer ewr geen driver voor het verbinden met de database gevonden is.
      */
     public void connectie(String header,ArrayList<ORF> forward, ArrayList<ORF> reverse, String refseq) throws SQLException, geenVerbinding, geenDriver {
        try {
@@ -61,7 +60,7 @@ public class DatabaseConnectie {
             preparedStmt.setString(4, refseq);
             preparedStmt.execute();
             
- // forward sequentie in ORF 
+
               for(int i = 0; i<forward.size();i++){
                 String query1 = "INSERT INTO ORF (START_POSITIE, STOP_POSITIE, READING_FRAME, SEQ_ID, SEQUENTIE_ORF) VALUES (?,?,?,?,?)"; 
                 PreparedStatement ps = connection.prepareStatement(query1);
@@ -72,8 +71,7 @@ public class DatabaseConnectie {
                 ps.setString(5, forward.get(i).getORFseq());
                 ps.execute();
               }
-              
- // reverse sequentie in oRF
+
             for(int i= 0;i<reverse.size();i++){
                 String query2 = "INSERT INTO ORF (START_POSITIE, STOP_POSITIE, READING_FRAME, SEQ_ID, SEQUENTIE_ORF) VALUES(?,?,?,?,?)"; 
                 PreparedStatement ps = connection.prepareStatement(query2);

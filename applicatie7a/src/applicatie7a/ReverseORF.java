@@ -6,16 +6,17 @@ import java.util.*;
  * Created by Michelle on 29-3-2017.
  */
 public class ReverseORF {
-    HashSet<String> ORF_1 = new HashSet<>(); //Alle ORF's
-    HashSet<String> ORF_2 = new HashSet<>(); // ""
-    HashSet<String> ORF_3 = new HashSet<>(); // ""
+    HashSet<String> ORF_1 = new HashSet<>(); 
+    HashSet<String> ORF_2 = new HashSet<>(); 
+    HashSet<String> ORF_3 = new HashSet<>(); 
     ArrayList<ORF> alleReverseORFs = new ArrayList<>();
 
     /**
-     *
-     * @param sequentie
-     * @param size
-     * @param header
+     * functie: het lezen en in objecten plaatsen van de reverse sequentie.
+     * known bugs: niet aanwezig.
+     * @param sequentie de ingevoerde sequentie.
+     * @param size Het minimale aantal nucleotiden waar een ORF uit moet bestaan voor het een geldig ORF is.
+     * @param header de header van het bestand.
      */
     public void leesBestand(String sequentie, int size, String header) {
         String revseq = new StringBuilder(sequentie).reverse().toString();
@@ -57,9 +58,7 @@ public class ReverseORF {
                 }
             }
         }
-        /**
-         * Readingframs +2
-         */
+
         for (int i = 1; i < revseq.length() - 2; i += 3) {
             int startpos;
             int stoppos = 0;
@@ -93,9 +92,7 @@ public class ReverseORF {
                 }
             }
         }
-        /**
-         * Readingframe +3
-         */
+
         for (int i = 2; i < revseq.length() - 2; i += 3) {
             int startpos;
             int stoppos = 0;
@@ -130,34 +127,22 @@ public class ReverseORF {
         }
     }
 
-    /**
-     *
-     * @return
-     */
+
     public int getORF_1size() {
         return ORF_1.size();
     }
 
-    /**
-     *
-     * @return
-     */
+
     public int getORF_2size() {
         return ORF_2.size();
     }
 
-    /**
-     *
-     * @return
-     */
+
     public int getORF_3size() {
         return ORF_3.size();
     }
 
-    /**
-     *
-     * @return
-     */
+
     public ArrayList<ORF> getORFreverse(){
     return alleReverseORFs;
     }

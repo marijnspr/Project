@@ -9,12 +9,13 @@ public class ORF {
     private int startpositie, stoppositie;
 
     /**
-     *
-     * @param header
-     * @param start
-     * @param stop
-     * @param rf
-     * @param seqORF
+     * fucntie: Het object voor de ORF's maken.
+     * known bugs: niet aanwezig
+     * @param header de header va het bestand.
+     * @param start de startpositie van het ORF.
+     * @param stop de stoppositie van het ORF.
+     * @param rf het readingframe waar het ORF zich op bevind.
+     * @param seqORF de sequentie van de ORF van start tm stop.
      */
     public ORF(String header, int start, int stop, String rf, String seqORF) {
         headers = header;
@@ -24,34 +25,22 @@ public class ORF {
         sequentieORF = seqORF;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public int getStartPos() {
         return startpositie;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public int getStopPos() {
         return stoppositie;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public String getReadingFrame() {
         return readingframe;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public String getORFseq() {
         return sequentieORF;
     }
