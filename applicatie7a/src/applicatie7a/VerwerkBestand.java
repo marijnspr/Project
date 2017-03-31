@@ -14,11 +14,13 @@ public class VerwerkBestand {
     ArrayList<ORF> alleForwardORFs = new ArrayList<>();
 
     /**
-     *
-     * @param seqDNA
-     * @param size
-     * @param header
+     * functie: het voorspellen van de ORF's op de forward sequentie.
+     * known bugs: niet aanwezig.
+     * @param seqDNA de ingevoerde DNA sequentie
+     * @param size Het minimale aantal nucleotiden waar een ORF uit moet bestaan voor het een geldig ORF is.
+     * @param header de header van het bestand.
      */
+    
     public void orfVoorspeller(String seqDNA, int size, String header) {
 
         HashSet<String> stopcodon = new HashSet<>();
@@ -58,9 +60,7 @@ public class VerwerkBestand {
                 }
             }
         }
-        /**
-         * Readingframs +2
-         */
+
         for (int i = 1; i < seqDNA.length() - 2; i += 3) {
             int startpos;
             int stoppos = 0;
@@ -92,9 +92,7 @@ public class VerwerkBestand {
                     }
             }
         }
-        /**
-         * Readingframe +3
-         */
+
         for (int i = 2; i < seqDNA.length() - 2; i += 3) {
             int startpos;
             int stoppos = 0;
@@ -128,34 +126,22 @@ public class VerwerkBestand {
         }
     }
 
-    /**
-     *
-     * @return
-     */
+
     public int getORF1size() {
         return ORF1.size();
     }
 
-    /**
-     *
-     * @return
-     */
+
     public int getORF2size() {
         return ORF2.size();
     }
 
-    /**
-     *
-     * @return
-     */
+
     public int getORF3size() {
         return ORF3.size();
     }
 
-    /**
-     *
-     * @return
-     */
+
     public ArrayList<ORF> getORFforward(){
     return alleForwardORFs;
     }
